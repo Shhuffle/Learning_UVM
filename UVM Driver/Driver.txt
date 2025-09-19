@@ -1,0 +1,9 @@
+The UVM driver is responsible for transaction-level communication with sequences via TLM,
+converting sequence_items into DUT pin-level activity through a virtual interface (BFM). 
+It is derived from uvm_driver and contains a seq_item_port connected to the sequencer, 
+with optional response handling via seq_item_port or rsp_port. 
+The driver can operate in active mode to generate stimulus or passive/slave mode to respond to DUT activity. 
+Proper driver-sequence coupling is essential to prevent deadlocks, 
+and providing base utility sequences along with driver behavior documentation ensures reusable and predictable 
+stimulus generation across testbenches.
+

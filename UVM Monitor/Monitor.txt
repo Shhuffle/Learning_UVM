@@ -1,0 +1,46 @@
+Overview 
+The first task of the analysis portion of the testbench is to monitor activity on the DUT. A Monitor, like a Driver, is 
+a constituent of an agent. A monitor component is similar to a driver component in that they both perform a 
+translation between actual signal activity and an abstract representation of that activity. The key difference between a 
+Monitor and a Driver is that a Monitor is always passive. It does not drive any signals on the interface. When an 
+agent is placed in passive mode, the Monitor continues to execute. 
+
+
+A Monitor communicates with DUT signals through a virtual interface, and contains code that recognizes protocol 
+patterns in the signal activity. Once a protocol pattern is recognized, a Monitor builds an abstract transaction model 
+representing that activity, and broadcasts the transaction to any interested components.
+
+
+BFM -  Bus functional Model.
+A BFM is a SystemVerilog interface or module that models the behavior of a bus or interface.
+
+Think of the BFM as a remote control:
+Instead of pressing each pin individually, you press a button (task) 
+and the BFM handles the exact signal toggles.
+
+BFM is a SystemVerilog interface.
+
+Consturction of Monitor 
+1. Passive Monitoring:- The monitor should not drive the DUT signals. Its only meant to 
+                        read the signal form the DUT using the BFM analysis port, and write those values
+                        to the transaction object
+
+2.Recognizing Protocol:- A monitor must have the knowledge of a protocol in order to 
+                        detect recognizable patterns in signal activity. Detection can 
+                        be done by writing protocol specific state machine code in the monitor
+                        BFM's run() task. 
+
+3.Copy-on-Write Policy:-  Since SystemVerilog objects are handle-based, a Monitor 
+                        must clone the transaction object before broadcasting it 
+                        through its analysis port otherwise, the same memory gets 
+                        reused in the next loop iteration and overwrites previous 
+                        data. To prevent this we can 
+                        
+                        Create a new transaction object in each iteration of
+                        (i.e. inside) the loop.
+
+                        Reuse the same transaction object in each iteration of 
+                        the loop, but clone the object immediately prior to calling
+                        write() and broadcast the handle of the clone.
+
+                        
