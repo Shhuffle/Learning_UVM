@@ -1,0 +1,13 @@
+The purpose of the UVM factory is to enable an object of one type to te subsitituted
+with an object of a derived type without changing the testbench structure or even the 
+testbench code 
+
+For example:-
+    lets say we are building a registerfile. Say initially we want to test 
+    the registerfile DUT with address bus size of 16bit and data bus size of 20bit.
+    Lets say later we modify our design to 20 and 24 bits then instead of rewriting 
+    the whole code for testing we just tweak some parameters on the same testbench 
+    code. 
+
+Additionally, in order to take advantage of the factory certain coding conventions must be 
+followed. 

@@ -1,0 +1,14 @@
+The UVM employs a layered, object-oriented approach to testbench development that allows “separation of 
+concerns” among the various team members. Each component in a UVM testbench has a specific purpose and a 
+well-defined interface to the rest of the testbench to enhance productivity and facilitate reuse. When these 
+components are assembled into a testbench, the result is a modular reusable verification environment that allows the 
+test writer to think at the transaction level, focusing on the functionality that must be verified, while the testbench 
+architect focuses on how the test interacts with the Design Under Test (DUT). 
+
+
+The Design Under Test (DUT) is connected to a layer of transactors (drivers, monitors, responders). These 
+transactors communicate with the DUT at the pin level by driving and sampling DUT signals, and with the rest of the 
+UVM testbench by passing transaction objects. They convert data between pins and transactions, i.e. from/to signal 
+to/from transaction level. The testbench layer above the transactor layer consists of components that interact 
+exclusively at the transaction level, such as scoreboards, coverage collectors, stimulus generators, etc. All structural 
+elements in a UVM testbench are extended from the uvm_component base class.

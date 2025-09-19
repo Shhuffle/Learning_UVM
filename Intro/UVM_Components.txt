@@ -1,0 +1,13 @@
+A UVM testbench is composed of component objects extended from the uvm_component base class. When a 
+uvm_component derived class object is created, it becomes part of the testbench hierarchy which persists for the 
+duration of the simulation. This contrasts with the sequence branch of the UVM class hierarchy which involves 
+transient objects - objects that are created, used and destroyed (i.e. garbage collected) once dereferenced. 
+
+
+
+The (quasi) static uvm_component hierarchy is used by the UVM reporting infrastructure to print the scope of a 
+component issuing a report message, by the configuration process to determine which components can access a 
+configuration object, and by the UVM factory to apply factory overrides. This component hierarchy is represented 
+by a linked list built up incrementally as each component is created. The hierarchical location of each component is 
+determined by the name and parent arguments passed to its create method at the time of construction.
+
