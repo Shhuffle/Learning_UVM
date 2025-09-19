@@ -1,0 +1,21 @@
+Build Phases 
+The build phases are executed at the start of the UVM testbench simulation and their overall purpose is to construct, 
+configure and connect the testbench component hierarchy. 
+All the build phase methods are functions and therefore execute in zero simulation time. 
+
+build 
+Once the UVM testbench root node component is constructed, the build phase starts to execute. It constructs the 
+testbench component hierarchy from the top downwards. The construction of each component is deferred so that 
+each layer in the component hierarchy can be configured by the level above. During the build phase 
+uvm_components are indirectly constructed using the UVM factory. 
+
+
+connect 
+The connect phase is used to make TLM connections between components or to assign handles to testbench 
+resources. It has to occur after the build method has put the testbench component hierarchy in place and works from 
+the bottom of the hierarchy upwards. 
+
+end_of_elaboration 
+The end_of_elaboration phase is used to make any final adjustments to the structure, configuration or connectivity of 
+the testbench before simulation starts. Its implementation can assume that the testbench component hierarchy and 
+inter-connectivity is in place. This phase executes bottom up.

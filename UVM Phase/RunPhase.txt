@@ -1,0 +1,15 @@
+UVM Run-Time Phases 
+
+1.  start_of_simulation → Occurs first, before time-consuming activity; used for banners, topology, or configuration display; executed bottom-up.
+2.  run → Main stimulus generation and checking; implemented as a task; runs in parallel across components (drivers, monitors, transactors).
+3.  Parallel auxiliary phases (usually called from test/env, not drivers/monitors):
+4.  pre_reset / reset / post_reset → Handle DUT reset and related pre/post activities.
+5.  pre_configure / configure / post_configure → Prepare and program DUT; set signals and memories before main stimulus.
+6.  pre_main / main / post_main → Main stimulus phase; sequences are executed; post_main finalizes main phase.
+7.  pre_shutdown / shutdown / post_shutdown → Ensure stimulus effects propagate, finalize DUT state, and perform cleanup before ending active simulation.
+
+
+Notes:
+
+Most testbenches use only reset, configure, main, shutdown phases.
+Pre/post phases exist for finer control but are often unused.

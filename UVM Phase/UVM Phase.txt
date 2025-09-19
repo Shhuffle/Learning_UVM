@@ -1,0 +1,12 @@
+In order to have a consistent tenstbench execution flow 
+the UVM uses phase to order the major steps that take place during simulation. 
+These are three goups of phases which are executed in the following order:
+ 1. Build phases - where the testbench is configured and constructed
+ 2. Run-time phases - where time is consumed in running the testcase on the testbench
+ 3. Clean up phases - where the results of the testcase are collected and reported
+
+
+1. run_test() creates the top-level testbench component and starts UVM phasing.
+2. You can provide a class name to run_test() or override it using +UVM_TESTNAME.
+3. Root node is usually a uvm_test (convention), but can be any uvm_component.
+4. The root node defines the test case, including component configuration and stimulus.
