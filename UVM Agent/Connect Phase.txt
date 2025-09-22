@@ -1,0 +1,14 @@
+The Agent Connect phase
+Once the agent's sub-components have been constructed, they must be connected. 
+The usual agent connetions required are 
+    Monitor's analysis port to agent's analysis port
+    Sequencer's seq_item_pull_export to driver's seq_item_pull_port (for active agent only)
+ • Analysis sub-component's analysis export to monitor's analysis port (where analysis sub-components exist)
+ • Monitor/driver's proxy virtual interface to configuration object's monitor/driver BFM virtual interface 2
+
+
+ Notes:
+ 1. The agent's analysis port handle can be assigned a pointer from the monitor's analysis port. This saves having to
+ construct a separate analysis port object in the agent.
+ 2.Assigning the driver proxy and monitor proxy virtual interfaces in the agent removes the need for these
+ sub-components to have the overhead of a configuration table lookup.

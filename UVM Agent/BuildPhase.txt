@@ -1,0 +1,35 @@
+The actions that take place duringan agnet's build phase are determined by the contents of imports
+configuration object. The first action is to geta  handle to the configuration object.
+Then, when sub-components are to be constructed, the values of pertinent configuration 
+fields determine whether they should be constructed or not.
+
+Driver BFM Instantiation 
+During the passive mode we want the agent not to actively drive the signal to the
+DUT so the driver object and the driver BFM should either not be Instantiated at all
+or set to the high impedence z mode.
+Also as a sv interface, driver BFM is Instantiated and created at static elaboration 
+time. Therefore the BFM state machines should generally not start automatically. Instead,
+a start indication from the corresponding proxy should be used as a trigger for a 
+BFM to start its activity.
+
+
+Driver Instantiation in UVM Agents
+
+Driver not needed:
+If DUT already drives signals (simple block-to-top reuse), don’t instantiate the driver → saves resources.
+
+Driver needed:
+If the agent must drive DUT signals in some tests, instantiate the driver.
+
+Use tri-state signals if both DUT and driver might drive the same line.
+
+How to control:
+Add a config parameter, e.g., bit has_driver = 1;
+Use a generate block to conditionally instantiate:
+
+if (cfg.has_driver) begin : driver_block
+    driver drv("driver", this, sequencer);
+end
+
+
+Benefit: Same agent can be reused as active (with driver) or passive (without driver).
