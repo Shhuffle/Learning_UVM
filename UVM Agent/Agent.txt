@@ -1,0 +1,18 @@
+A agent is the lowest level hierarchiaal block in a testbench. It encapsulates monitor and driver proxy object
+with their respecitve BFM interface via a virtual interface handle. Monitor proxy and monitor BFM work together
+as a pair, same goes for the driver. Proxies are simply class objects providing the same API as "normal" class
+objects.
+API -  Application Programming interface 
+
+A UVM agent is a verification component "kit" for a given logical interface such as APB or USB.
+
+This folder contains an Agent example using for the APB bus. The APB agent's pin interface, 
+apb_if, is coded in the file apb_if.sv. The monitor BFM interface named 
+apb_monitor_bfm has an apb_if port.
+
+The driver BFM named apb_driver_bfm also has an apb_if port. 
+The BFMs define tasks and functions to interact with the signals in the apb_if 
+pin interface. The driver and monitor proxies do not directly access the pins, 
+which is to be kept local to the BFMs. The file apb_agent_pkg.sv contains the 
+SystemVerilog package with the various class files for the APB agent. Any component 
+using files from this package, like an env, imports this package. 
