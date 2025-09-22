@@ -1,0 +1,8 @@
+The uvm_config_db class is the recommended way to access the resource database.
+A resource is any piece of information that is shared between two or more components
+or objects. We use uvm_config_db::set to put information into the database and use uvm_config_db::get to retrieve information from the database. 
+
+The type parameter has no limitation it can a class, a uvm_object, a build-in type like a bit, byte or a virtual interface, etc
+
+There are two typical uses of the uvm_config_db. The first is to pass virtual interfaces from the HDL/DUT domain 
+to the test, and the second is to pass configuration objects down through the testbench hierarchy.

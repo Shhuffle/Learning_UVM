@@ -1,0 +1,5 @@
+Two sets of precedence rules apply to uvm_config_db. Firstly, during the build phase a set() call in a context higher 
+up the component hierarchy takes precedence over a set() call occurring lower down the hierarchy. Secondly, in case 
+of identical contexts or after the build phase, the last set() call takes precedence over the earlier one. For more details 
+on these rules, please consult the UVM reference manual or look directly at the verbosity messages from the UVM 
+code. 
