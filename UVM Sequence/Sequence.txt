@@ -1,0 +1,42 @@
+Sequence
+A sequence is like a function object (a functor).
+It’s created → run → destroyed.
+It has a body() task where the main action happens:
+Can generate sequence items (transactions).
+Can call/run other sequences (like subroutines).
+Life span = short / temporary → exists only while active.
+
+Inheritance:
+
+uvm_sequence
+   ↓
+uvm_sequence_item
+   ↓
+uvm_object
+
+
+Since it’s an object, not a component, it does not live in the static testbench hierarchy.
+
+Sequence Item
+A transaction object (data packet).
+Created in sequence, sent to driver (via sequencer).
+Driver converts it into DUT pin-level activity.
+Also used to carry response back from DUT → driver → sequencer → sequence.
+Also transient → exists only while in use.
+
+
+Component
+Built from uvm_component.
+Examples: driver, monitor, agent, env, test.
+They form a static hierarchy (tree) that exists for the entire simulation.
+Life span = persistent / long-term → from build_phase until simulation ends.
+Registered and managed automatically in UVM’s component tree.
+
+
+In the UVM sequence architecture, sequences are responsible for the stimulus generation flow and send 
+sequence_items to a driver via a sequencer component. The driver is responsible for converting the information 
+contained within sequence_items into pin level activity. The sequencer is an intermediate component which 
+implements communication channels and arbitration mechanisms to facilitate interactions between sequences and 
+drivers. The flow of data objects is bidirectional, request items will typically be routed from the sequence to the 
+driver and response items will be returned to the sequence from the driver. The sequencer end of the communication 
+interface is connected to the driver end together during the connect phase.
