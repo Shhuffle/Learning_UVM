@@ -1,0 +1,28 @@
+SystemVerilog Packages & UVM Guidelines
+Package = groups related declarations (types, constants, funcs, classes) into a namespace for organization & reuse. Must be imported before use.
+UVM base library = in uvm_pkg. UVM testbenches use packages to organize agents, envs, sequences, tests.
+
+Guidelines
+
+1.Naming
+Package name ends with _pkg.
+File name matches package, extension .sv.
+Example: spi_env_pkg.sv → package spi_env_pkg;.
+
+2.Classes
+Each class in separate .svh file.
+Only the package file uses `include (no includes inside .svh).
+Include files in correct compile order.
+
+3.Imports
+External package imports at top of package body.
+No imports inside .svh files.
+
+4.Directory Structure
+Keep all package files in one directory.
+Ensures reuse, clean compilation, standalone agent packages.
+
+External imports are available for that package only i.e if we include a package
+inside another package then only the include local to the first package will be included
+in the second package, no external package can be loaded in the second package.
+
