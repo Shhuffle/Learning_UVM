@@ -1,0 +1,40 @@
+Embedding Sub-Component Configuration Objects
+Problem
+Sub-components (agents, drivers, monitors) need config objects for setup.
+Intermediate components (like env) may need local modifications before passing configs down.
+Passing each config individually from the test can become messy in large hierarchies.
+
+Solution: Hierarchical Config Objects
+Env Config Object
+The environment (env) has its own config object.
+This config object contains handles to sub-configs for each agent.
+
+Test Constructs Configs
+Create the environment config object and all agent config objects.
+Assign agent config handles into the env config object.
+
+env_cfg = spi_env_config::type_id::create("env_cfg");
+apb_cfg = apb_agent_config::type_id::create("apb_cfg");
+spi_cfg = spi_agent_config::type_id::create("spi_cfg");
+
+env_cfg.apb_cfg = apb_cfg;
+env_cfg.spi_cfg = spi_cfg;
+
+
+Put Env Config in Config DB
+Only the env config is added to the UVM configuration database.
+uvm_config_db#(spi_env_config)::set(this, "*", "env_cfg", env_cfg);
+
+
+Env Unfolds Sub-Configs
+During build_phase, the env retrieves its config.
+Extracts sub-configs, optionally reconfigures them.
+Passes sub-configs to agents via uvm_config_db::set.
+
+function void spi_env::build_phase(uvm_phase phase);
+  if(!uvm_config_db#(spi_env_config)::get(this, "", "env_cfg", m_env_cfg))
+    `uvm_fatal("NOCFG", "env_cfg not found")
+
+  uvm_config_db#(apb_agent_config)::set(this, "apb_agent*", "cfg", m_env_cfg.apb_cfg);
+  uvm_config_db#(spi_agent_config)::set(this, "spi_agent*", "cfg", m_env_cfg.spi_cfg);
+endfunction

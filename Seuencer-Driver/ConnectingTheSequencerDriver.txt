@@ -1,0 +1,10 @@
+The transfer of request and response sequence items between sequence and their 
+target driver is facilitated by a bidirectional TLM communication mechanism implemented
+in the sequencer.  The uvm_driver class contains an uvm_seq_item_pull_port which should be connected to an uvm_seq_item_pull_export 
+in the sequencer associated with the driver. The port and export classes are parameterized with the types of the sequence_items that are going to 
+be used for request and response transactions. Once the port-export connection is made, the driver code can use the 
+API implemented in the export to get request sequence_items from sequences and return responses to them.
+
+This connection between the driver port and the sequencer export is made using a TLM connect method 
+during the connect phase 
+

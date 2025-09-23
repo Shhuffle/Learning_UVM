@@ -1,0 +1,52 @@
+UVM Testbench Build and Connection Process
+1. Final Stage of Test Build
+The final stage involves building the next level of hierarchy using the UVM factory.
+Usually, this means building the top-level environment (env), but:
+There may be more than one env.
+There could be conditional builds (choice between multiple envs).
+
+2. Factory Create Method Conventions
+create() method arguments:
+Name string → identifies the component in the hierarchy.
+Convention: name string = local handle of the component (facilitates cross-referencing).
+Parent pointer → references the parent uvm_component.
+Usually: this (the current component)
+
+Example:
+
+m_env = spi_env::type_id::create("m_env", this);
+Here, dynamic path in UVM hierarchy: "spi_test.m_env"
+Enables proper messaging, configuration, and path-based referencing.
+
+3. Hierarchical Build Process
+
+Top-down approach:
+Test class is constructed → build_phase() called.
+Each child component’s build_phase() is called recursively.
+Hierarchy is fully built when all components are constructed.
+
+Deferred construction benefit:
+Allows higher-level components to influence lower-level builds.
+
+Example:
+If an agent is passive, its driver and sequencer are not created (only needed if active).
+
+4. Hierarchical Connection Process
+Occurs after build phase.
+Works bottom-up:
+Makes TLM connections between components.
+Assigns virtual interface handles.
+Assigns other resources (e.g., register models).
+
+Role of configuration objects:
+Config objects may hold virtual interface references or other data guiding connections.
+
+Example:
+Agent only connects driver to sequencer if agent is active.
+
+5. Key Points
+Build phase: constructs hierarchy top-down, allows deferred decisions.
+Connect phase: establishes communication and resource links bottom-up.
+Factory conventions:
+Name = handle, Parent = this
+Ensures correct UVM dynamic paths and cross-references.

@@ -1,0 +1,22 @@
+A UVM testbench uses SystemVerilog classes (dynamic) + interfaces/modules (static) in a layered hierarchy.
+DUT is central, connected to transactors (drivers, monitors, responders).
+    Transactors = convert between pins ↔ transactions.
+Above transactors = pure transaction-level components (scoreboard, coverage, stimulus generators).
+
+Architecture Styles
+1. Class-only style
+Transactors and testbench built only from classes.
+Portable only to SystemVerilog simulators.
+
+2. Partitioned (Dual Top) style
+Splits into two domains:
+HDL domain (timed, signal-level)
+HVL/TB domain (transaction-level)
+
+    Transactors are split into:
+        BFM interface → handles signal-level code.
+        Proxy class → handles transaction-level code.
+        BFM ↔ Proxy communicate via tasks/functions.
+
+ In short: UVM testbench layers DUT, transactors, and TB components. For portability, transactors 
+ are partitioned into BFM (HDL) + Proxy (HVL), enabling a dual-top architecture.
