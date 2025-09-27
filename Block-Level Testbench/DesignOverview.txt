@@ -1,0 +1,7 @@
+The Testbench Modules 
+Two top level testbench modules are used in the SPI block level testbench. The hdl_top module contains the SPI 
+Master DUT, the APB and SPI BFMs and the apb_if, spi_if and intr_if pin interfaces. The SPI Master DUT is 
+connected to the apb_if, spi_if and intr_if which in turn are connected to the APB and SPI master and slave BFMs, 
+respectively. Two initial blocks are also encapsulated within the hdl_top module. The first initial block places the 
+virtual interface handles for the BFM interfaces into the UVM configuration space using uvm_config_db::set. The 
+second initial block generates a clock and a reset signal for the APB interface.
