@@ -1,6 +1,3 @@
-// explain me the combinatinal part i mean does it mean it will run forever independent of 
-// clock and logic and if i do sth like  load = apb.load 
-// inside a alwyas comb does it mean it will load apb.load to load register just one time or everytime?
 
 module dut(input logic clk, input logic reset,apb_if apb);
     //dut registers
