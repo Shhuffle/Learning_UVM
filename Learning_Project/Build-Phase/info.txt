@@ -1,0 +1,18 @@
+In this folder I have implemented UVM block level testbench architecture using the knowledge form the uvm_cookbook 
+
+DUT:
+APB timer:-
+    Registers (accessible over APB):
+        LOAD → value to load into counter.
+        CTRL → bits: {start, stop, reset, enable interrupt}.
+        STATUS → bits: {overflow_flag, running}.
+        COUNT → current counter value (read-only).
+
+    Behavior:
+        When CTRL.start = 1, counter decrements from LOAD each clock cycle.
+        When it hits 0, set STATUS.overflow_flag = 1 and (if enabled) assert irq.
+        CTRL.reset clears counter and flag.
+
+    Outputs:
+        irq (1-bit interrupt signal).
+        Optional: expose COUNT as register-readable.
