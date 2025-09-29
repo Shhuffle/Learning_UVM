@@ -1,5 +1,5 @@
 
-module dut(input logic clk, input logic reset,apb_if apb);
+module apb_counter(input logic clk, input logic reset,apb_if apb);
     //dut registers
     typedef enum [1:0]bit {
        RESET_st       =    2'b00,
